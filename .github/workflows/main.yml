@@ -12,13 +12,31 @@ jobs:
       - uses: msys2/setup-msys2@v2
         with:
           msystem: MINGW64
-          update: true
-      - name: CI-Build
-        env:
-          MSYS: winjitdebug
+          update: false
+
+      - name: Setup JIT debugging
         run: |
-          echo 'Running in MSYS2!'
           mkdir -p /c/dumps
           ./procdump64.exe -accepteula -ma -i /c/dumps
+
+      - name: Run 64bit
+        env:
+          MSYS: winjitdebug
+        continue-on-error: true
+        run: |
           ./crash-64.exe
+
+      - name: Show dumps
+        run: |
+          ls -l /c/dumps
+
+      - name: Run 32bit
+        env:
+          MSYS: winjitdebug
+        continue-on-error: true
+        run: |
+          ./crash-32.exe
+
+      - name: Show dumps
+        run: |
           ls -l /c/dumps
