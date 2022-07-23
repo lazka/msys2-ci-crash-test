@@ -4,6 +4,7 @@ on: [push, pull_request]
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         msystem: [MINGW64, MINGW32, UCRT64, CLANG64, CLANG32]
     env:
@@ -19,7 +20,8 @@ jobs:
         with:
           msystem: ${{ matrix.msystem }}
           update: false
-          pacboy: git base-devel cc:p meson:p
+          install: git base-devel
+          pacboy: cc:p meson:p
 
       - name: Setup JIT debugging
         run: |
