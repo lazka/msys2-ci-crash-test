@@ -7,9 +7,9 @@ jobs:
       fail-fast: false
       matrix:
         msystem: [MINGW64, MINGW32, UCRT64, CLANG64, CLANG32]
-        dummy: [1, 2, 3]
-    env:
-      MSYS: winjitdebug
+        dummy: [1, 2]
+    #env:
+    #  MSYS: winjitdebug
 
     runs-on: windows-latest
     defaults:
