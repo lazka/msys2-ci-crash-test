@@ -3,6 +3,9 @@ on: [push, pull_request]
 
 jobs:
   build:
+    strategy:
+      matrix:
+        dummy: [1, 2, 3, 4, 5, 6]
     env:
       MSYS: winjitdebug
 
