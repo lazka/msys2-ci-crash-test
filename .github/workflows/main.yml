@@ -30,13 +30,16 @@ jobs:
           ./procdump.exe -accepteula -ma -i /c/dumps
 
       - name: Test
-        continue-on-error: true
         run: |
           git clone --depth 1 https://github.com/msys2/MINGW-packages
           cd MINGW-packages/mingw-w64-gobject-introspection
           makepkg-mingw -Csf --noarchive --noconfirm --nocheck
+          cd ..
+          cd MINGW-packages/mingw-w64-mesa
+          makepkg-mingw -Csf --noarchive --noconfirm --nocheck
 
       - name: Show dumps
+        if: always()
         run: |
           shopt -s nullglob
           for f in /c/dumps/*; do
