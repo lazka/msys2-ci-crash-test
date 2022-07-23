@@ -3,6 +3,9 @@ on: [push, pull_request]
 
 jobs:
   build:
+    env:
+      MSYS: winjitdebug
+
     runs-on: windows-latest
     defaults:
       run:
@@ -13,6 +16,7 @@ jobs:
         with:
           msystem: MINGW64
           update: false
+          install: git base-devel mingw-w64-x86_64-gcc mingw-w64-x86_64-meson
 
       - name: Setup JIT debugging
         run: |
@@ -20,19 +24,12 @@ jobs:
           ./procdump64.exe -accepteula -ma -i /c/dumps
           ./procdump.exe -accepteula -ma -i /c/dumps
 
-      - name: Run 64bit
-        env:
-          MSYS: winjitdebug
+      - name: Test
         continue-on-error: true
         run: |
-          ./crash-64.exe
-
-      - name: Run 32bit
-        env:
-          MSYS: winjitdebug
-        continue-on-error: true
-        run: |
-          ./crash-32.exe
+          git clone --depth 1 https://github.com/msys2/MINGW-packages
+          cd MINGW-packages/mingw-w64-gobject-introspection
+          makepkg -Csfr --noconfirm --nocheck
 
       - name: Show dumps
         run: |
