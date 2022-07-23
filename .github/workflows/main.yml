@@ -18,6 +18,7 @@ jobs:
         run: |
           mkdir -p /c/dumps
           ./procdump64.exe -accepteula -ma -i /c/dumps
+          ./procdump.exe -accepteula -ma -i /c/dumps
 
       - name: Run 64bit
         env:
