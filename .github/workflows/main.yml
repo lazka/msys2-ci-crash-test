@@ -14,7 +14,11 @@ jobs:
           msystem: MINGW64
           update: true
       - name: CI-Build
+        env:
+          MSYS: winjitdebug
         run: |
           echo 'Running in MSYS2!'
           mkdir -p /c/dumps
           ./procdump64.exe -accepteula -ma -i /c/dumps
+          ./crash-64.exe
+          ls -l /c/dumps
