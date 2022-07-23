@@ -29,10 +29,11 @@ jobs:
         run: |
           git clone --depth 1 https://github.com/msys2/MINGW-packages
           cd MINGW-packages/mingw-w64-gobject-introspection
-          makepkg -Csfr --noconfirm --nocheck
+          makepkg-mingw -Csf --noarchive --noconfirm --nocheck
 
       - name: Show dumps
         run: |
+          shopt -s nullglob
           for f in /c/dumps/*; do
             echo "::group::[$f]"
             ./minidump-stackwalk.exe "$f"
