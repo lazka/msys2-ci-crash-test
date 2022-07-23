@@ -27,10 +27,6 @@ jobs:
         run: |
           ./crash-64.exe
 
-      - name: Show dumps
-        run: |
-          ls -l /c/dumps
-
       - name: Run 32bit
         env:
           MSYS: winjitdebug
@@ -40,4 +36,8 @@ jobs:
 
       - name: Show dumps
         run: |
-          ls -l /c/dumps
+          for f in /c/dumps/*; do
+            echo "::group::[$f]"
+            minidump-stackwalk.exe "$f"
+            echo "::endgroup::"
+          done
