@@ -38,6 +38,6 @@ jobs:
         run: |
           for f in /c/dumps/*; do
             echo "::group::[$f]"
-            minidump-stackwalk.exe "$f"
+            ./minidump-stackwalk.exe "$f"
             echo "::endgroup::"
           done
